@@ -1,0 +1,75 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Bionic Reading — demo</title>
+    <link rel="stylesheet" href="content.css" />
+    <style>
+      body { font: 17px/1.7 Georgia, serif; max-width: 640px; margin: 0 auto; padding: 32px 20px 80px; }
+      .bar { position: sticky; top: 0; background: #fff; padding: 12px 0; border-bottom: 1px solid #ddd;
+             display: flex; gap: 10px; align-items: center; font: 13px system-ui; margin-bottom: 20px; }
+      button { font: 13px system-ui; padding: 5px 11px; border: 1px solid #ccc; border-radius: 7px;
+               background: #fff; cursor: pointer; }
+      pre, code { background: #f4f4f6; font: 13px ui-monospace, Menlo, monospace; }
+      pre { padding: 10px; border-radius: 7px; }
+      textarea { width: 100%; font: 15px Georgia, serif; padding: 8px; }
+      #count { color: #666; margin-left: auto; }
+    </style>
+  </head>
+  <body>
+    <div class="bar">
+      <button id="on">Apply</button>
+      <button id="off">Revert</button>
+      <button id="add">Append a paragraph</button>
+      <label>strength <input type="range" id="s" min="10" max="90" value="40" step="5" /></label>
+      <span id="count"></span>
+    </div>
+
+    <div id="article">
+      <h2>Attention neurodivergent community</h2>
+      <p>
+        This bionic reading method is absolutely mind blowing. Your eyes scan the first bold letters
+        and your brain center automatically completes the words. It lets you read twice as fast, is
+        less overwhelming and helps you to stay focused. Read more at https://en.wikipedia.org/wiki/Neurodiversity
+        or email hello@example.com — neither should get bolded.
+      </p>
+      <p>
+        You will feel much more <em>productive</em> and a greater sense of achievement, which will
+        boost your confidence. Inline <code>const x = 1</code> stays untouched, as does this block:
+      </p>
+      <pre>function fixation(len, strength) {
+  return Math.max(1, Math.round(len * strength));
+}</pre>
+      <p>Type in here — the text must never be rewritten under your cursor:</p>
+      <textarea rows="3">Editable text stays exactly as typed.</textarea>
+      <p contenteditable="true">This paragraph is contenteditable and must stay plain.</p>
+    </div>
+
+    <script src="defaults.js"></script>
+    <script src="content.js"></script>
+    <script>
+      // Drives the real engine functions directly, no extension needed.
+      const article = document.getElementById('article');
+      const strength = () => document.getElementById('s').value / 100;
+      const count = () => (document.getElementById('count').textContent =
+        `${article.querySelectorAll('brx-w').length} nodes wrapped`);
+
+      const apply = () => {
+        revertAll(article);
+        for (const n of collect(article, [])) wrap(n, strength());
+        count();
+      };
+
+      document.documentElement.style.setProperty('--brx-fw', 700);
+      document.documentElement.style.setProperty('--brx-dim', 0.75);
+      document.getElementById('on').addEventListener('click', apply);
+      document.getElementById('off').addEventListener('click', () => (revertAll(article), count()));
+      document.getElementById('s').addEventListener('input', () => article.querySelector('brx-w') && apply());
+      document.getElementById('add').addEventListener('click', () => {
+        const p = document.createElement('p');
+        p.textContent = 'Freshly appended paragraph — the extension observer should catch this one.';
+        article.append(p);
+      });
+    </script>
+  </body>
+</html>

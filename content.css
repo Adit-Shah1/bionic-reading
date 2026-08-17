@@ -1,0 +1,25 @@
+/* brx-w / t are unknown elements on purpose: inline by default, no UA styles,
+   and site CSS written for span/b selectors mostly won't match them. */
+brx-w {
+  all: unset;
+  display: inline;
+}
+
+brx-w b {
+  font-weight: var(--brx-fw, 700);
+  color: inherit;
+  background: none;
+}
+
+/* The tail carries the dimming, not the wrapper — a child can't be more opaque
+   than its parent, so opacity has to live on the part being faded. */
+brx-w t {
+  all: unset;
+  display: inline;
+  opacity: var(--brx-dim, 1);
+}
+
+html[data-brx-typo] * {
+  line-height: var(--brx-lh, normal) !important;
+  letter-spacing: var(--brx-ls, normal) !important;
+}

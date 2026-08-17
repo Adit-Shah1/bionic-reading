@@ -1,0 +1,127 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Bionic Reading — Settings</title>
+    <link rel="stylesheet" href="ui.css" />
+    <style>
+      body { max-width: 640px; margin: 0 auto; padding: 32px 24px 64px; }
+      header { margin-bottom: 24px; }
+      header p { color: var(--muted); margin: 6px 0 0; }
+      section {
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        padding: 18px;
+        margin-top: 18px;
+      }
+      .field + .field { margin-top: 16px; }
+      .sample { margin-bottom: 20px; font-size: 15px; }
+      .sites { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+      ul { list-style: none; margin: 0 0 10px; padding: 0; min-height: 24px; }
+      li {
+        display: flex; align-items: center; justify-content: space-between;
+        gap: 8px; padding: 4px 0; font-size: 13px;
+        border-bottom: 1px dashed var(--line);
+      }
+      li button { border: 0; background: none; color: var(--muted); padding: 0 4px; font-size: 16px; line-height: 1; }
+      li button:hover { color: #d33; }
+      .empty { color: var(--muted); font-size: 12.5px; font-style: italic; padding: 4px 0; }
+      .add { display: flex; gap: 6px; }
+      .add input { flex: 1; min-width: 0; }
+      .actions { display: flex; gap: 8px; margin-top: 12px; }
+      #status { color: var(--accent); font-size: 12.5px; margin-left: auto; align-self: center; }
+      @media (max-width: 560px) { .sites { grid-template-columns: 1fr; } }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1 style="font-size: 20px">Bionic Reading</h1>
+      <p>Bolds the leading letters of each word so your eyes fixate and your brain fills in the rest.</p>
+    </header>
+
+    <div class="sample" id="sample"></div>
+
+    <section>
+      <h2>Appearance</h2>
+
+      <div class="field">
+        <div class="row"><label for="strength">Bold strength</label><span class="val" id="strengthVal"></span></div>
+        <input type="range" id="strength" min="10" max="90" step="5" />
+        <p class="hint">How much of each word gets bolded.</p>
+      </div>
+
+      <div class="field">
+        <div class="row"><label for="weight">Bold weight</label><span class="val" id="weightVal"></span></div>
+        <input type="range" id="weight" min="500" max="900" step="100" />
+        <p class="hint">Lighter weights read better on sites with thin fonts.</p>
+      </div>
+
+      <div class="field">
+        <div class="row"><label for="dim">Dim the rest of the word</label><span class="val" id="dimVal"></span></div>
+        <input type="range" id="dim" min="30" max="100" step="5" />
+        <p class="hint">Fades the non-bold tail to sharpen the contrast. 100% = no fading.</p>
+      </div>
+
+      <div class="field">
+        <div class="row"><label for="lineHeight">Line spacing</label><span class="val" id="lineHeightVal"></span></div>
+        <input type="range" id="lineHeight" min="0" max="30" step="1" />
+        <p class="hint">Overrides the site's line height. Off by default — it can reflow layouts.</p>
+      </div>
+
+      <div class="field">
+        <div class="row"><label for="letterSpacing">Letter spacing</label><span class="val" id="letterSpacingVal"></span></div>
+        <input type="range" id="letterSpacing" min="0" max="20" step="1" />
+        <p class="hint">Off by default. Also reflows layouts.</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>When to turn on</h2>
+      <div class="field">
+        <select id="mode">
+          <option value="remember">Only on sites I've enabled it (recommended)</option>
+          <option value="always">On every site, except the ones I block</option>
+          <option value="manual">Never automatically — I'll toggle it each time</option>
+        </select>
+        <p class="hint">The toolbar icon and <b>Alt+B</b> always work regardless of this setting.</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>Sites</h2>
+      <div class="sites">
+        <div>
+          <h2>Always on</h2>
+          <ul id="allow"></ul>
+          <div class="add">
+            <input type="text" id="addAllow" placeholder="example.com" />
+            <button data-add="true">Add</button>
+          </div>
+        </div>
+        <div>
+          <h2>Never on</h2>
+          <ul id="block"></ul>
+          <div class="add">
+            <input type="text" id="addBlock" placeholder="example.com" />
+            <button data-add="false">Add</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Backup</h2>
+      <textarea id="json" rows="6" spellcheck="false" aria-label="Settings as JSON"></textarea>
+      <div class="actions">
+        <button id="export">Copy current settings</button>
+        <button id="import" class="primary">Load from box</button>
+        <button id="reset">Reset all</button>
+        <span id="status" role="status"></span>
+      </div>
+    </section>
+
+    <script src="defaults.js"></script>
+    <script src="content.js"></script>
+    <script src="options.js"></script>
+  </body>
+</html>

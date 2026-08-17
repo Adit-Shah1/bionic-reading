@@ -1,0 +1,40 @@
+{
+  "manifest_version": 3,
+  "name": "Bionic Reading",
+  "version": "1.0.0",
+  "description": "Bolds the first few letters of every word so your eyes fixate and your brain fills in the rest. Works on any site.",
+  "permissions": ["storage"],
+  "host_permissions": ["<all_urls>"],
+  "background": { "service_worker": "background.js" },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/16.png",
+      "32": "icons/32.png",
+      "48": "icons/48.png",
+      "128": "icons/128.png"
+    }
+  },
+  "icons": {
+    "16": "icons/16.png",
+    "32": "icons/32.png",
+    "48": "icons/48.png",
+    "128": "icons/128.png"
+  },
+  "options_ui": { "page": "options.html", "open_in_tab": true },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["defaults.js", "content.js"],
+      "css": ["content.css"],
+      "run_at": "document_idle",
+      "all_frames": true
+    }
+  ],
+  "commands": {
+    "toggle": {
+      "suggested_key": { "default": "Alt+B" },
+      "description": "Toggle bionic reading on this page"
+    }
+  }
+}

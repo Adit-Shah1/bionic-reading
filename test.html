@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Bionic Reading — self-check</title>
+    <style>
+      body { font: 14px/1.6 ui-monospace, Menlo, monospace; padding: 24px; max-width: 800px; }
+      #out div { padding: 2px 0; }
+      .pass { color: #197d3c; }
+      .fail { color: #c1121f; font-weight: bold; }
+      #summary { font-size: 18px; margin-bottom: 16px; }
+      #fixture { position: absolute; left: -9999px; }
+    </style>
+  </head>
+  <body>
+    <h1>Bionic Reading self-check</h1>
+    <div id="summary">running…</div>
+    <div id="out"></div>
+
+    <!-- Real DOM the round-trip test operates on. -->
+    <div id="fixture"><p>Attention neurodivergent community, 42 readers.</p><pre>const x = 1;</pre><textarea>hello there</textarea><div contenteditable="true">draft text here</div><p>Tail <em>emphasis</em> and <code>inline_code</code>.</p></div>
+
+    <script src="defaults.js"></script>
+    <script src="content.js"></script>
+    <script src="test.js"></script>
+  </body>
+</html>
